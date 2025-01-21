@@ -1,0 +1,16 @@
+{
+  "workspaces": [
+    "packages/*"
+  ],
+  "name": "ha",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "hub": "pnpm --filter hub dev",
+    "plugin": "pnpm --filter plugin-a dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
