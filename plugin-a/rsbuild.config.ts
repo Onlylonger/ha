@@ -10,7 +10,16 @@ export default defineConfig({
       exposes: {
         "./entry": "./src/entry.tsx",
       },
-      shared: ["react", "react-dom"],
+      shared: {
+        react: {
+          singleton: true,
+          requiredVersion: "^19.0.0",
+        },
+        "react-dom": {
+          singleton: true,
+          requiredVersion: "^19.0.0",
+        },
+      },
     }),
   ],
   server: {

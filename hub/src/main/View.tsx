@@ -14,7 +14,7 @@ export const View = () => {
     return null;
   }, [params.viewId, viewIds]);
 
-  console.log(params);
+  console.log(params, viewIds);
 
   return <div>{pluginHolder}-11</div>;
 };

@@ -13,26 +13,60 @@ init({
       alias: "plugin-a",
     },
   ],
+  shared: {
+    react: {
+      shareConfig: {
+        singleton: true,
+        requiredVersion: "^19.0.0",
+      },
+    },
+
+    "react-dom": {
+      shareConfig: {
+        singleton: true,
+        requiredVersion: "^19.0.0",
+      },
+    },
+  },
 });
 
-export const useMainStore = create<any>((set, get) => ({
+export const useMainStore = create<{
+  [key: string]: any;
+  menus: Record<string, any>[];
+}>((set, get) => ({
   viewIds: {},
+  menus: [],
 
   load() {
-    const { viewIds } = get();
-
     // 使用别名加载
     loadRemote("plugin-a/entry").then((module: any) => {
       const { install } = module.default;
       install({
         registryView(id: string, cb: Function) {
-          console.log(id, cb);
+          const { viewIds } = get();
+
           if (!viewIds[id]) {
             set({
               viewIds: {
                 ...viewIds,
                 [id]: cb,
               },
+            });
+          }
+        },
+        registryMenu(item: { id: string; label: string; onClick: Function }) {
+          const { menus } = get();
+
+          if (!menus.find((v) => v.id === item.id)) {
+            set({
+              menus: [
+                ...menus,
+                {
+                  id: item.id,
+                  label: item.label,
+                  onClick: item.onClick,
+                },
+              ],
             });
           }
         },

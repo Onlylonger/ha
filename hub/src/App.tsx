@@ -3,6 +3,7 @@ import "./App.css";
 import { LabsList } from "./lab-list/LabsList";
 import { MainLayout } from "./main/MainLayout";
 import { View } from "./main/View";
+import { useTabStore } from "./main/tab-store";
 
 const App = () => {
   return <Outlet />;
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
           {
             path: ":viewId",
             element: <View />,
+            loader({ params }) {
+              params.viewId && useTabStore.getState().initTab(params.viewId);
+              return null;
+            },
           },
         ],
       },
